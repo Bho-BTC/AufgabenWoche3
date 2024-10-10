@@ -1,4 +1,4 @@
-package Aufgabe2;
+package Aufgabe3;
 
 public interface QueueListInterface {
     int popFront();

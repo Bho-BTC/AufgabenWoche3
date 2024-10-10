@@ -1,11 +1,11 @@
-package Aufgabe2;
+package Aufgabe3;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        QueueList list = new QueueList();
+        QueueList2 list = new QueueList2();
         int toDo = 0;
         while (toDo != -1) {
             System.out.println();
