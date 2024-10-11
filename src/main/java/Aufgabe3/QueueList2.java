@@ -5,9 +5,12 @@ public class QueueList2 implements QueueListInterface {
     int list[] = new int[5];
     int popFrontCount = 0;
 
-    private int firstIndex() {
-        if (popFrontCount > list.length - 1) {
+    private int firstIndex() { //erster Index ist immer zwischen
+        while (popFrontCount > list.length - 1) {
             popFrontCount -= list.length;
+        }
+        while (popFrontCount < 0) {
+            popFrontCount += list.length;
         }
         return popFrontCount;
     }
@@ -38,17 +41,20 @@ public class QueueList2 implements QueueListInterface {
     @Override
     public int popLast() {
         int temp = -1;
-        int i = lastIndex();
-        while (i != firstIndex()) {
-            if (list[i] != 0) {
-                temp = list[i];
-                list[i] = 0;
-                break;
-            } else {
-                if (i == 0) {
-                    i = list.length - 1;
-                } else {
-                    i--;
+        if (firstIndex() != 0) {
+            //         4 2 0 0 1 2
+            for (int i = lastIndex(); i >= 0; i--) {
+                if (list[i] != 0) {
+                    temp = list[i];
+                    list[i] = 0;
+                    break;
+                }
+            }
+            for (int i = list.length - 1; i >= firstIndex(); i--) {
+                if (list[i] != 0) {
+                    temp = list[i];
+                    list[i] = 0;
+                    break;
                 }
             }
         }
@@ -61,28 +67,21 @@ public class QueueList2 implements QueueListInterface {
         if (list[lastIndex()] != 0) {
             list = doubleArrayLenght(list);
         }
-
-        int temp = -1;
-        int j = lastIndex();
-        while (j != firstIndex()) {
-            if (list[j] != 0) {
-                temp = list[i];
-                if (j == list.length - 1) {
-                    list[0] = i;
-                } else {
-                    list[j + 1] = i;
-                }
-                break;
-            } else {
-                if (j == 0) {
-                    j = list.length - 1;
-                } else {
-                    j--;
-                }
+        //         4 2 0 0 1 2
+        for (int a = firstIndex(); a < list.length; a++) {
+            if (list[a] == 0) {
+                list[a] = i;
+                return i;
             }
         }
-        return temp;
+        for (int a = 0; a <= lastIndex(); a++) {
+            if (list[a] == 0) {
+                list[a] = i;
+                return i;
+            }
+        }
 
+        return -1;
     }
 
     @Override
@@ -91,23 +90,15 @@ public class QueueList2 implements QueueListInterface {
         if (list[lastIndex()] != 0) {
             list = doubleArrayLenght(list);
         }
+
         if (list[firstIndex()] != 0) {
-            int j = lastIndex();
-            while(j!=firstIndex()) {
-                if(j!=0 && j != list.length - 1) {
-                list[j + 1] = list[j];
-                } else if (j == list.length - 1) {
+            popFrontCount--;
+            list[firstIndex()] = i;
+            temp = list[firstIndex()];
+        } else {
 
-
-                }
-            }
-
-
-
-        }
-        list[firstIndex()] = i;
-        if (list[firstIndex()] != 0) {
-            temp = list[0];
+            list[firstIndex()] = i;
+            temp = list[firstIndex()];
         }
 
         return temp;
@@ -124,9 +115,25 @@ public class QueueList2 implements QueueListInterface {
 
     private int[] doubleArrayLenght(int[] array2Coppy) {
         int[] temp = new int[array2Coppy.length * 2];
-        for (int i = 0; i < array2Coppy.length; i++) {
-            temp[i] = array2Coppy[i];
+        int j = 0;
+        if (firstIndex() != 0) {
+
+            for (int i = firstIndex(); i <= array2Coppy.length-1; i++) {
+                temp[j] = array2Coppy[i];
+                j++;
+            }
+            for (int i = 0; i <= lastIndex(); i++) {
+                temp[j] = array2Coppy[i];
+                j++;
+            }
+        }else {
+            for (int i = 0; i <= lastIndex(); i++) {
+                temp[j] = array2Coppy[i];
+                j++;
+            }
         }
+        popFrontCount = 0;
+
         return temp;
     }
 
@@ -134,11 +141,35 @@ public class QueueList2 implements QueueListInterface {
         System.out.println();
         System.out.println("Queue List");
         System.out.println();
-        for(int i : list) {
-            System.out.print(i + " ");
+
+        if (firstIndex() != 0) {
+            for (int i = firstIndex(); i < list.length; i++) {
+                if( list[i] != 0) {
+                    System.out.print(list[i] + " ");
+                }
+            }
+            for (int i = 0; i <= lastIndex(); i++) {
+                if( list[i] != 0) {
+                    System.out.print(list[i] + " ");
+                }
+            }
+        }else{
+            for ( int i : list){
+                if(i != 0) {
+                    System.out.print(i + " ");
+                }
+
+            }
         }
 
-        System.out.println("FrontCount :" + popFrontCount + "FirstIndex :" + firstIndex() + "LastIndex :" + lastIndex());
+ /*
+        int j =0;
+        for(int i : list) {
+            System.out.print("I:"+ j+ " = "+ i + " |");
+            j++;
+        }*/
+        System.out.println();
+        System.out.println("FrontCount: " + popFrontCount + " FirstIndex: " + firstIndex() + " LastIndex: " + lastIndex());
     }
 
 
