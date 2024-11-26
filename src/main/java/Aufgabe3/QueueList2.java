@@ -5,6 +5,7 @@ public class QueueList2 implements QueueListInterface {
     int list[] = new int[5];
     protected int popFrontCount = 0;
     protected int popLastCount = 0;
+    protected boolean firstEntry=true;
 
     private int lastIndex (){
         while (popLastCount > list.length -1){
@@ -33,8 +34,6 @@ public class QueueList2 implements QueueListInterface {
             temp = list[firstIndex()];
             list[firstIndex()] = 0;
             popFrontCount++;
-
-
         }
         return temp;
     }
@@ -60,13 +59,14 @@ public class QueueList2 implements QueueListInterface {
         if (queueListFull()) {   //Change array full condition
             list = doubleArrayLenght(list);
         }
-        if (list[lastIndex()] != 0) {
+        if (!firstEntry) {
             popLastCount++;
             list[lastIndex()] = i;
             temp = list[lastIndex()];
         }else {
             list[lastIndex()] = i;
             temp = list[lastIndex()];
+            firstEntry=false;
         }
         return temp;
     }
@@ -89,13 +89,14 @@ public class QueueList2 implements QueueListInterface {
         if (queueListFull()) {   //Change array full condition
             list = doubleArrayLenght(list);
         }
-        if (list[firstIndex()] != 0) {
+        if (!firstEntry) {
             popFrontCount--;
             list[firstIndex()] = i;
             temp = list[firstIndex()];
         } else {
             list[firstIndex()] = i;
             temp = list[firstIndex()];
+            firstEntry = false;
         }
         return temp;
     }
