@@ -4,17 +4,17 @@ public class QueueList2 implements QueueListInterface {
 
     int list[] = new int[5];
     protected int popFrontCount = 0;
-    protected int popLastCount = 0;
+    protected int pushLastCount = 0;
     protected boolean firstEntry=true;
 
     private int lastIndex (){
-        while (popLastCount > list.length -1){
-            popLastCount -= list.length;
+        while (pushLastCount > list.length -1){
+            pushLastCount -= list.length;
         }
-        while (popLastCount < 0){
-            popLastCount+= list.length;
+        while (pushLastCount < 0){
+            pushLastCount += list.length;
         }
-        return popLastCount;
+        return pushLastCount;
     }
 
     private int firstIndex() { //erster Index ist immer zwischen
@@ -44,7 +44,7 @@ public class QueueList2 implements QueueListInterface {
         if (list[firstIndex()] != 0) {
                     temp = list[lastIndex()];
                     list[lastIndex()] = 0;
-                    popLastCount--;
+                    pushLastCount--;
                     return temp;
         }
         return temp;
@@ -60,7 +60,7 @@ public class QueueList2 implements QueueListInterface {
             list = doubleArrayLenght(list);
         }
         if (!firstEntry) {
-            popLastCount++;
+            pushLastCount++;
             list[lastIndex()] = i;
             temp = list[lastIndex()];
         }else {
@@ -129,7 +129,7 @@ public class QueueList2 implements QueueListInterface {
             }
         }
         popFrontCount = 0;
-        popLastCount = array2Coppy.length-1;
+        pushLastCount = array2Coppy.length-1;
         return temp;
     }
 
