@@ -95,22 +95,30 @@ public class QueueList implements QueueListInterface {
         System.out.println();
         System.out.println("Queue List");
         for (int i = 0; i < list.length; i++) {
-            if(list[i] != 0) {
+            if (list[i] != 0) {
                 System.out.print(list[i] + " ");
-            }else if (list[0]==0){
+            } else if (list[0] == 0) {
                 System.out.println("Die Queue List ist leer.");
                 break;
-            }else{
+            } else {
                 break;
             }
-
         }
-
     }
 
+    public String toString() {
 
+        String s = "[";
+        for (int i = 0; i < this.list.length; i++) {
+            s += this.list[i];
+            if (i < this.list.length - 1) {
+                s += ", ";
+            }
+        }
+        s += "]";
+        return s;
+    }
 }
 
 
-   //[1][2][3] [4] [5] [0]
 
